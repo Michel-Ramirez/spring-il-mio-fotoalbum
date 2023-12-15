@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Picture details</title>
+</head>
+
+<body>
+    <header th:replace="fragments :: header"></header>
+    
+    <main class="container" th:object="${picture}">
+        
+        <h1 class="my-5">[[*{title}]]</h1>
+        
+       
+            <figure>
+                <img class="img-fluid" th:src="*{img}" alt="pizza-photo">
+            </figure>
+            <div>
+                <h4>Description</h4>
+                <p>[[*{description}]]</p>
+            </div>
+      
+        <div class="mt-5">
+            <i class="fw-bolder">id: [[*{id}]]</i>
+        </div>
+        
+    </main>
+</body>
+
+</html>
