@@ -30,15 +30,20 @@
                     <th scope="col">ID</th>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Categories</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="picture : ${pictures}" th:object="${picture}">
-        
+                <tr th:each="picture : ${pictures}" th:object="${picture}"> 
                     <th scope="row">[[*{id}]]</th>
                     <td>[[*{title}]]</td>
                     <td>[[*{description}]]</td>
+                    <td>
+                       <span th:each="cat : ${picture.categories}" th:object="${cat}" class="badge text-bg-primary me-2 my-1 fs-6">
+                           [[*{name}]]
+                       </span> 
+                    </td>
                     <td class="d-flex justify-content-end">
                         <a th:replace="fragments :: button(@{/picture/{id}(id=${picture.id})}, 'view')"></a>
                         <a th:href="@{/picture/edit/{id}(id=${picture.id})}" class="btn btn-sm btn-warning me-3">edit</a>

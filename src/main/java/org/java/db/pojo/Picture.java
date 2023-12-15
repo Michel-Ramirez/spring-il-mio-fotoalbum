@@ -46,7 +46,7 @@ public class Picture {
 	@JsonProperty
 	private List<Category> category;
 
-	public List<Category> getCategory() {
+	public List<Category> getCategories() {
 		return category;
 	}
 

@@ -33,4 +33,14 @@ public class PictureService {
 
 		return pictureRepo.findByTitleContainingIgnoreCase(value);
 	}
+
+	public List<Picture> getAllPicturesWithCategories() {
+		List<Picture> pictures = pictureRepo.findAll();
+
+		for (Picture picture : pictures) {
+			picture.getCategories().size();
+		}
+
+		return pictures;
+	}
 }

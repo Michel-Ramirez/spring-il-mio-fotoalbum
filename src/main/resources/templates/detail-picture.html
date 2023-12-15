@@ -9,24 +9,27 @@
 
 <body>
     <header th:replace="fragments :: header"></header>
-    
+
     <main class="container" th:object="${picture}">
-        
-        <h1 class="my-5">[[*{title}]]</h1>
-        
-       
-            <figure>
-                <img class="img-fluid" th:src="*{img}" alt="pizza-photo">
-            </figure>
-            <div>
-                <h4>Description</h4>
-                <p>[[*{description}]]</p>
-            </div>
-      
+
+        <h1 class="mt-5">[[*{title}]]</h1>
+
+        <div th:each="category : ${categories}" th:object="${category}" class="badge text-bg-info mb-3 fs-5">
+                [[*{{name}}]]
+        </div>
+
+        <figure class="text-center">
+            <img class="img-fluid" th:src="*{img}" alt="pizza-photo">
+        </figure>
+        <div>
+            <h4>Description</h4>
+            <p>[[*{description}]]</p>
+        </div>
+
         <div class="mt-5">
             <i class="fw-bolder">id: [[*{id}]]</i>
         </div>
-        
+
     </main>
 </body>
 
