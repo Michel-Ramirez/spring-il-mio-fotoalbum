@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+
+<body>
+    
+    <a th:fragment="button(link, title)" th:href="${link}" th:text="${title}" class="btn btn-sm btn-info me-3">
+    </a>
+    
+    <header th:fragment="header" style="box-shadow: 0px 14px 16px -5px rgba(125,125,125,0.68);">
+        <div class="container pt-3">
+            <div class="row">
+                <div class="col-2">
+                    <h2 class="text-red fw-bolder fs-2">SPRING OF PICTURES...</h2>
+
+                </div>
+<!--                <div class="col d-flex justify-content-end align-items-center">-->
+<!--                    <a a sec:authorize="hasAnyAuthority('USER', 'ADMIN')"-->
+<!--                        class="fs-5 fw-bolder pe-5 text-decoration-none text-black" th:href="@{/home}">PIZZAS</a>-->
+<!--                    <a sec:authorize="hasAuthority('ADMIN')" class="fs-5 fw-bolder pe-5 text-decoration-none text-black"-->
+<!--                        th:href="@{/ingredients}">INGREDIENTS</a>-->
+<!--                    <a sec:authorize="hasAnyAuthority('USER', 'ADMIN')"-->
+<!--                        class="fs-5 text-decoration-none text-white btn btn-sm btn-primary"-->
+<!--                        th:href="@{/logout}">logout</a>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </header>
+</body>
+
+</html>

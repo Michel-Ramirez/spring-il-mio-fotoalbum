@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+<title>Picture List</title>
+</head>
+<body>
+    <header th:replace="fragments :: header"></header>
+    
+    
+    <main class="container">
+        
+        <h1 class="my-5">Manage you're pictures</h1> 
+        
+        <div class="d-flex justify-content-end mb-5">
+            <form class="d-flex" role="search" method="get">
+                <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="query"
+                    th:value="${query}">
+                <button class="btn btn-outline-success me-3" type="submit">Search</button>
+            </form>
+
+            <a th:replace="fragments :: button(@{/picture/create}, 'Add picture')"></a>
+
+        </div>
+        
+        <table th:if="${pictures.size() > 0}" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="picture : ${pictures}" th:object="${picture}">
+        
+                    <th scope="row">[[*{id}]]</th>
+                    <td>[[*{title}]]</td>
+                    <td>[[*{description}]]</td>
+                    <td class="d-flex justify-content-end">
+                        <a th:replace="fragments :: button(@{/picture/{id}(id=${picture.id})}, 'view')"></a>
+                        <a th:href="@{/picture/edit/{id}(id=${picture.id})}" class="btn btn-sm btn-warning me-3">edit</a>
+                        <form th:action="@{/picture/delete/{id}(id=${picture.id})}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    
+</body>
+</html>
