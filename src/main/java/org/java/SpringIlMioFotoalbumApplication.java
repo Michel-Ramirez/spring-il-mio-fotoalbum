@@ -50,7 +50,7 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 
 		Picture foto1 = new Picture("Bliss",
 				"Una foto di un paesaggio collinare verde con un cielo azzurro senza nuvole, diventata famosa come sfondo predefinito di Windows XP.",
-				"https://www.resetdigitale.it/img/cms/5de0dcc3d868f064786593.jpg", true, cat3, cat5);
+				"https://www.resetdigitale.it/img/cms/5de0dcc3d868f064786593.jpg", false, cat3, cat5);
 		Picture foto2 = new Picture("Lunch atop a Skyscraper",
 				"Immagine di undici operai seduti su una trave durante la costruzione del Rockefeller Center a New York, mangiando il pranzo sospesi in aria.",
 				"https://www.fotografidigitali.it/i/n/usa_2_720.jpg", true, cat9, cat5);

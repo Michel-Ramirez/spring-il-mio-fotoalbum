@@ -16,7 +16,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Picture {
@@ -34,10 +33,11 @@ public class Picture {
 	@Length(min = 5, message = "The description must be longer than 5 characters")
 	private String description;
 
+	@Column(columnDefinition = "TEXT")
 	@URL(message = "unvalid URL")
 	private String img;
 
-	@NotNull(message = "this field is required")
+//	@NotNull(message = "this field is required")
 	private boolean visible;
 
 	// -----// RELAZIONE //-----//
