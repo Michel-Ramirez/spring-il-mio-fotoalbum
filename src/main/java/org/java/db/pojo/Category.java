@@ -24,7 +24,7 @@ public class Category {
 	@Length(min = 5, message = "The description must be longer than 5 characters")
 	private String name;
 
-	@ManyToMany(mappedBy = "Categories")
+	@ManyToMany(mappedBy = "categories")
 	private List<Picture> pictures;
 
 	public List<Picture> getPictures() {

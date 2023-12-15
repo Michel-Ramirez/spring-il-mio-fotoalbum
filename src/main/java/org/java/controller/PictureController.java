@@ -25,7 +25,7 @@ public class PictureController {
 	@GetMapping("/")
 	public String getFoto(Model model, @RequestParam(required = false) String query) {
 
-		List<Picture> pictures = query != null ? pictureService.findByTitle(query)
+		List<Picture> pictures = query != null ? pictureService.findByTitleOrCategory(query)
 				: pictureService.getAllPicturesWithCategories();
 
 		System.out.println(pictures);

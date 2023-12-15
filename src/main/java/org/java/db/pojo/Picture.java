@@ -43,16 +43,16 @@ public class Picture {
 	// -----// RELAZIONE //-----//
 
 	@ManyToMany
-	@JsonProperty
-	private List<Category> category;
+	private List<Category> categories;
 
+	@JsonProperty
 	public List<Category> getCategories() {
-		return category;
+		return categories;
 	}
 
 	@JsonIgnore
-	public void setCategories(List<Category> category) {
-		this.category = category;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public void setCategories(Category... categories) {

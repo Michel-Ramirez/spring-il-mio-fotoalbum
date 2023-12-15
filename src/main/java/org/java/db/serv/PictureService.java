@@ -29,9 +29,9 @@ public class PictureService {
 		pictureRepo.delete(picture);
 	}
 
-	public List<Picture> findByTitle(String value) {
+	public List<Picture> findByTitleOrCategory(String value) {
 
-		return pictureRepo.findByTitleContainingIgnoreCase(value);
+		return pictureRepo.findPicturesByPictureTilteOrCategoryName(value);
 	}
 
 	public List<Picture> getAllPicturesWithCategories() {
