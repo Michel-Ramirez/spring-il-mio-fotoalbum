@@ -1,5 +1,10 @@
 package org.java;
 
+import org.java.auth.config.AuthConfig;
+import org.java.auth.db.pojo.Role;
+import org.java.auth.db.pojo.User;
+import org.java.auth.db.serv.RoleService;
+import org.java.auth.db.serv.UserService;
 import org.java.db.pojo.Category;
 import org.java.db.pojo.Message;
 import org.java.db.pojo.Picture;
@@ -23,6 +28,12 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 	@Autowired
 	private MessageService messageServ;
 
+	@Autowired
+	private RoleService roleService;
+
+	@Autowired
+	private UserService userService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIlMioFotoalbumApplication.class, args);
 
@@ -30,6 +41,18 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		Role role1 = new Role("ADMIN");
+		Role role2 = new Role("SUPERADMIN");
+
+		roleService.save(role1);
+		roleService.save(role2);
+
+		String psw = AuthConfig.passwordEncoder().encode("psw");
+
+		User user1 = new User("Michel", "Ramirez", "mich", "michel.ramirez@gmail.com", psw);
+
+		userService.save(user1);
 
 		Category cat1 = new Category("Ritratti");
 		Category cat2 = new Category("Natura morta");
