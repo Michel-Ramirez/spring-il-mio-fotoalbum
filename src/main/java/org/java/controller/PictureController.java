@@ -2,11 +2,15 @@ package org.java.controller;
 
 import java.util.List;
 
+import org.java.auth.db.pojo.User;
+import org.java.auth.db.serv.UserService;
 import org.java.db.pojo.Category;
 import org.java.db.pojo.Picture;
 import org.java.db.serv.CategoryService;
 import org.java.db.serv.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,13 +32,21 @@ public class PictureController {
 	@Autowired
 	private CategoryService catServ;
 
+	@Autowired
+	private UserService userService;
+
 	// ROTTA PER LA HOME DOVE MOSTRO TUTE LE PC
 	@GetMapping("/")
-	public String getPicture(Model model, @RequestParam(required = false) String query) {
+	public String getPicture(Model model, @RequestParam(required = false) String query,
+			@AuthenticationPrincipal UserDetails userDetails) {
+
+		String username = userDetails.getUsername();
+		User user = userService.findByUsername(username);
+		userService.findByUsername(username);
 
 		// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
-		List<Picture> pictures = query != null ? pictureService.findByTitleOrCategory(query)
-				: pictureService.getAllPicturesWithCategories();
+		List<Picture> pictures = query != null ? pictureService.findByUserAndTitleOrCategory(user, query)
+				: pictureService.getAllPicturesByUser(user);
 
 		model.addAttribute("pictures", pictures);
 		return "index-pictures-list";
@@ -68,7 +80,12 @@ public class PictureController {
 	// ROTTA IN POST PER IL SALVATAGGIO DELLA PIC CON VALIDAZIONE, SE C'E' UN ERRORE
 	// RESTITUIRA' L'OGGETTO CON GLI ERRORI
 	@PostMapping("/picture/create")
-	public String createPicture(Model model, @Valid @ModelAttribute Picture picture, BindingResult bindingResult) {
+	public String createPicture(Model model, @Valid @ModelAttribute Picture picture, BindingResult bindingResult,
+			@AuthenticationPrincipal UserDetails userDetails) {
+
+		String username = userDetails.getUsername();
+		User user = userService.findByUsername(username);
+		picture.setUser(user);
 
 		// RICHIAMO IL METODO SAVE PASSANDOGLI DEGLI ATTRIBUTI
 		return save(model, picture, bindingResult);

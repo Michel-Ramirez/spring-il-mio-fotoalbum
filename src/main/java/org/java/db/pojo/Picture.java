@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
+import org.java.auth.db.pojo.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +15,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -41,6 +44,18 @@ public class Picture {
 
 	// -----// RELAZIONE //-----//
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@ManyToMany
 	private List<Category> categories;
 
@@ -63,13 +78,14 @@ public class Picture {
 	public Picture() {
 	}
 
-	public Picture(String title, String description, String img, boolean visible, Category... categories) {
+	public Picture(String title, String description, String img, boolean visible, User user, Category... categories) {
 
 		setTitle(title);
 		setDescription(description);
 		setImg(img);
 		setVisible(visible);
 		setCategories(categories);
+		setUser(user);
 
 	}
 

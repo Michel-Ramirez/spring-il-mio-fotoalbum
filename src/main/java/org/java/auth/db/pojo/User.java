@@ -3,6 +3,8 @@ package org.java.auth.db.pojo;
 import java.util.Collection;
 import java.util.List;
 
+import org.java.db.pojo.Message;
+import org.java.db.pojo.Picture;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -42,6 +45,30 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	@NotBlank(message = "this flield is required")
 	private String password;
+
+//-----| RELAZIONI | ------//
+
+	@OneToMany(mappedBy = "user")
+	private List<Picture> pictures;
+
+	public List<Picture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
+	}
+
+	@OneToMany(mappedBy = "user")
+	private List<Message> messages;
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
 
 	// RELAZIONE TRA GLI USE E I RUOLI
 	@ManyToMany(fetch = FetchType.EAGER)

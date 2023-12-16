@@ -2,6 +2,7 @@ package org.java.db.serv;
 
 import java.util.List;
 
+import org.java.auth.db.pojo.User;
 import org.java.db.pojo.Picture;
 import org.java.db.repo.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,18 @@ public class PictureService {
 		pictureRepo.delete(picture);
 	}
 
-	public List<Picture> findByTitleOrCategory(String value) {
-
-		return pictureRepo.findPicturesByPictureTilteOrCategoryName(value);
+	public List<Picture> findByUserAndTitleOrCategory(User user, String query) {
+		return pictureRepo.findByUserAndTitleContaining(user, query);
 	}
+
+	public List<Picture> getAllPicturesByUser(User user) {
+		return pictureRepo.findByUser(user);
+	}
+
+//	public List<Picture> findByTitleOrCategory(String value) {
+//
+//		return pictureRepo.findPicturesByPictureTilteOrCategoryName(value);
+//	}
 
 	public List<Picture> getAllPicturesWithCategories() {
 		List<Picture> pictures = pictureRepo.findAll();
