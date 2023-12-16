@@ -96,4 +96,9 @@ public class Message {
 		this.data_recived = data_recived;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + getId() + "] " + getName() + ", " + getEmail();
+	}
+
 }

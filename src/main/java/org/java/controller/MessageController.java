@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -29,5 +31,16 @@ public class MessageController {
 
 		return "message-list";
 
+	}
+
+	@PostMapping("/message/read/{id}")
+	public String makeAsRaed(@PathVariable int id) {
+		Message msg = messageServ.findById(id);
+
+		msg.setMessage_read(true);
+
+		messageServ.save(msg);
+
+		return "redirect:/messages/list";
 	}
 }

@@ -28,7 +28,7 @@
                     <a th:href="@{/messages/list}" class="btn btn-primary position-relative">
                         Messages
                         <span th:if="${messages.size() > 0}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            [[${messages.size()}]]
+                            [[${#lists.size(messages.?[message_read == false])}]]
                         </span>
                     </a>
                     <!--                    <a sec:authorize="hasAnyAuthority('USER', 'ADMIN')"-->
@@ -41,7 +41,7 @@
 
     <main class="container"> 
         
-        <h2 class="my-5">Your messages <span th:if="${messages.size > 0}" class="badge bg-danger" >[[${messages.size()}]]</span></h2>
+        <h2 class="my-5">Your messages <span th:if="${messages.size() > 0}" class="badge bg-danger" >[[${#lists.size(messages.?[message_read == false])}]]</span></h2>
         
         <h3 th:if="${messages.size() == 0}" class="text-center">There are no messages</h3>
         
@@ -57,8 +57,12 @@
                         <p class="card-text">[[*{message}]]</p>                        
                     </div>
                     <div class="mt-5 text-end">
-                        <a href="#" class="btn btn-sm btn-warning">mark as read</a>
-                        <a href="#" class="btn btn-sm btn-danger">delete</a>                        
+                        <form th:action="@{/message/read/{id}(id=${msg.id})}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-warning">make as read</button>
+                        </form>
+                        <form th:action="@{/mesage/delete/{id}(id=${msg.id})}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+                        </form>                        
                     </div>
                 </div>
             </div>            
