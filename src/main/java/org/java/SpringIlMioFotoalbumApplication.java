@@ -1,8 +1,12 @@
 package org.java;
 
+import java.time.LocalDateTime;
+
 import org.java.db.pojo.Category;
+import org.java.db.pojo.Message;
 import org.java.db.pojo.Picture;
 import org.java.db.serv.CategoryService;
+import org.java.db.serv.MessageService;
 import org.java.db.serv.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +21,9 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoryService catServ;
+
+	@Autowired
+	private MessageService messageServ;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIlMioFotoalbumApplication.class, args);
@@ -95,6 +102,41 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		pictureService.save(foto9);
 		pictureService.save(foto10);
 
+		Message msg1 = new Message("Marco Rossi", "marco.rossi@example.com",
+				"Buongiorno, mi presento come nuovo membro della nostra azienda!", LocalDateTime.now());
+		Message msg2 = new Message("Sofia Bianchi", "sofia.bianchi@example.com",
+				"Sono entusiasta di iniziare questa nuova avventura con voi.", LocalDateTime.now());
+		Message msg3 = new Message("Luca Ferrari", "luca.ferrari@example.com",
+				"Non vedo l'ora di contribuire al nostro team e crescere insieme.", LocalDateTime.now());
+		Message msg4 = new Message("Martina Esposito", "martina.esposito@example.com",
+				"Sono qui per aiutarvi in tutto ciò di cui avete bisogno.", LocalDateTime.now());
+		Message msg5 = new Message("Alessio Romano", "alessio.romano@example.com",
+				"Desidero ringraziarvi per questa opportunità e per il supporto.", LocalDateTime.now());
+		Message msg6 = new Message("Chiara Moretti", "chiara.moretti@example.com",
+				"Mi impegnerò al massimo per raggiungere gli obiettivi della nostra azienda.", LocalDateTime.now());
+		Message msg7 = new Message("Davide Russo", "davide.russo@example.com",
+				"Sono desideroso di imparare e sviluppare le mie competenze per contribuire al successo del team.",
+				LocalDateTime.now());
+		Message msg8 = new Message("Federica Conti", "federica.conti@example.com",
+				"Non vedo l'ora di conoscere tutti voi e creare un ambiente di lavoro collaborativo.",
+				LocalDateTime.now());
+		Message msg9 = new Message("Simone Marchetti", "simone.marchetti@example.com",
+				"Se avete suggerimenti o consigli da condividere, sarò più che felice di ascoltarvi.",
+				LocalDateTime.now());
+		Message msg10 = new Message("Valentina Colombo", "valentina.colombo@example.com",
+				"Grazie ancora per l'accoglienza calorosa. Non vedo l'ora di lavorare insieme a voi!",
+				LocalDateTime.now());
+
+		messageServ.save(msg1);
+		messageServ.save(msg2);
+		messageServ.save(msg3);
+		messageServ.save(msg4);
+		messageServ.save(msg5);
+		messageServ.save(msg6);
+		messageServ.save(msg7);
+		messageServ.save(msg8);
+		messageServ.save(msg9);
+		messageServ.save(msg10);
 	}
 
 }

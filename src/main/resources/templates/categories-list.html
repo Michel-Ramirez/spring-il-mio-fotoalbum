@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Categories</title>
+</head>
+
+<body>
+    <header th:replace="fragments :: header"></header>
+    
+    <main class="container">
+        
+        <h1 class="my-5">Categories</h1>
+        
+        <div class="d-flex justify-content-end mb-5">
+            <form class="d-flex" role="search" method="get">
+                <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="query"
+                    th:value="${query}">
+                <button class="btn btn-outline-success me-3" type="submit">Search</button>
+            </form>
+            <a th:replace="fragments :: button(@{/category/create}, 'Add category')"></a>
+        </div>
+        
+        <h2 th:if="${categories.size() ==    0}" class="text-center pt-3">Sorry there are currently no categories :(</h2>
+        
+        <table th:if="${categories.size() > 0}" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cat : ${categories}" th:object="${cat}">
+                    <th scope="row">[[*{id}]]</th>
+                    <td class="fw-bolder">[[*{name}]]</td>
+                    <td class="d-flex justify-content-end">
+                        <form th:action="@{/category/delete/{id}(id=${cat.id})}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

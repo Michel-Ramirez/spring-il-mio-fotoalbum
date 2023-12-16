@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Create category</title>
+    <style>
+        .wrapper {
+            width: 500px;
+            border: 1px solid gray;
+            padding: 50px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header th:replace="fragments :: header"></header>
+
+    <main class="container">
+        <form class="d-flex justify-content-center mt-5" method="POST" th:object="${category}">
+            <div class="wrapper">            
+                <div class="mb-3">
+                    <label for="name-category" class="form-label">Category name</label>
+                    <input type="text" class="form-control" id="name-category" th:field="*{name}">
+                    <div th:replace="fragments :: alertError('name')"></div>
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <button type="submit" class="btn btn-success me-3">Save</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                </div>   
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

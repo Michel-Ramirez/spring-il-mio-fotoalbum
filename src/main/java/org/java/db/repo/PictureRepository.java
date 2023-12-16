@@ -13,6 +13,7 @@ public interface PictureRepository extends JpaRepository<Picture, Integer> {
 
 	List<Picture> findByTitleContainingIgnoreCase(String value);
 
+	// QUERY PER TROVARE LE PIC PER NOME O PER CATEGORIA
 	@Query("SELECT DISTINCT p FROM Picture p LEFT JOIN p.categories c WHERE p.title LIKE %:searchQuery% OR c.name LIKE %:searchQuery%")
 	List<Picture> findPicturesByPictureTilteOrCategoryName(@Param("searchQuery") String searchQuery);
 }

@@ -7,10 +7,9 @@
 </head>
 
 <body>
-    
-    <a th:fragment="button(link, title)" th:href="${link}" th:text="${title}" class="btn btn-sm btn-info me-3">
-    </a>
-    
+
+    <a th:fragment="button(link, title)" th:href="${link}" th:text="${title}" class="btn btn-sm btn-info"></a>
+
     <header th:fragment="header" style="box-shadow: 0px 14px 16px -5px rgba(125,125,125,0.68);">
         <div class="container pt-3">
             <div class="row">
@@ -19,25 +18,31 @@
 
                 </div>
                 <div class="col d-flex justify-content-end align-items-center">
-                   <a class="fs-5 fw-bolder pe-5 text-decoration-none text-primary" th:href="@{/}">PICTURES</a>
-<!--                    <a sec:authorize="hasAuthority('ADMIN')" class="fs-5 fw-bolder pe-5     text-decoration-none text-black"-->
-<!--                        th:href="@{/ingredients}">INGREDIENTS</a>-->
-<!--                    <a sec:authorize="hasAnyAuthority('USER', 'ADMIN')"-->
-<!--                        class="fs-5 text-decoration-none text-white btn btn-sm btn-primary"-->
-<!--                        th:href="@{/logout}">logout</a>-->
+                    <a class="fs-5 fw-bolder pe-5 text-decoration-none text-primary" th:href="@{/}">PICTURES</a>
+                    <a class="fs-5 fw-bolder pe-5 text-decoration-none text-primary"
+                        th:href="@{/categories/list}">CATEGORIES</a>
+                    <a th:href="@{/messages/list}" class="btn btn-primary position-relative">
+                        Messages
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            99+
+                        </span>
+                    </a>
+                    <!--                    <a sec:authorize="hasAnyAuthority('USER', 'ADMIN')"-->
+                    <!--                        class="fs-5 text-decoration-none text-white btn btn-sm btn-primary"-->
+                    <!--                        th:href="@{/logout}">logout</a>-->
                 </div>
             </div>
         </div>
     </header>
-    
+
     <div th:fragment="alertError(field)" class="alert alert-danger mt-1" th:if="${#fields.hasErrors(field)}">
         <ul class="m-0">
             <li th:each="err : ${#fields.errors(field)}" class="list-unstyled">
                 [[${err}]]
             </li>
-        </ul>    
+        </ul>
     </div>
-    
+
     <footer th:fragment="footer" class="d-flex justify-content-center mt-5 pt-5 border-top">
         <p><i class="fs-5">Created with love by Michel Ramirez </i></p>
     </footer>

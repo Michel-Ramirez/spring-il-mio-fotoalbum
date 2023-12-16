@@ -21,9 +21,10 @@ public class Category {
 
 	@Column(nullable = false, length = 128)
 	@NotBlank(message = "this field is required")
-	@Length(min = 5, message = "The description must be longer than 5 characters")
+	@Length(min = 3, message = "The description must be longer than 3 characters")
 	private String name;
 
+	// RELAZIONE CON LE PIC
 	@ManyToMany(mappedBy = "categories")
 	private List<Picture> pictures;
 
@@ -31,6 +32,7 @@ public class Category {
 		return pictures;
 	}
 
+	// GETTEN & SETTER
 	public void setPictures(List<Picture> pictures) {
 		this.pictures = pictures;
 	}

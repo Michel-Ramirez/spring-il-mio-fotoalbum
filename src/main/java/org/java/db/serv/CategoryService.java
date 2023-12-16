@@ -29,4 +29,7 @@ public class CategoryService {
 		categoryRepo.delete(category);
 	}
 
+	public List<Category> findByName(String value) {
+		return categoryRepo.findByNameContainingIgnoreCase(value);
+	}
 }

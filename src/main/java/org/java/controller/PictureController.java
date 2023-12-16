@@ -28,9 +28,11 @@ public class PictureController {
 	@Autowired
 	private CategoryService catServ;
 
+	// ROTTA PER LA HOME DOVE MOSTRO TUTE LE PC
 	@GetMapping("/")
 	public String getFoto(Model model, @RequestParam(required = false) String query) {
 
+		// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
 		List<Picture> pictures = query != null ? pictureService.findByTitleOrCategory(query)
 				: pictureService.getAllPicturesWithCategories();
 
@@ -39,6 +41,7 @@ public class PictureController {
 
 	}
 
+	// ROTTA PER IL DETTAGLIO DELLA PC
 	@GetMapping("/picture/{id}")
 	public String detailPicture(Model model, @PathVariable int id) {
 
@@ -51,6 +54,7 @@ public class PictureController {
 
 	}
 
+	// ROTTA PER LA CREAZIONE DELLA PC
 	@GetMapping("/picture/create")
 	public String viewPage(Model model) {
 
@@ -61,9 +65,12 @@ public class PictureController {
 		return "create-update-pic";
 	}
 
+	// ROTTA IN POST PER IL SALVATAGGIO DELLA PIC CON VALIDAZIONE, SE C'E' UN ERRORE
+	// RESTITUIRA' L'OGGETTO CON GLI ERRORI
 	@PostMapping("/picture/create")
 	public String createPicture(Model model, @Valid @ModelAttribute Picture picture, BindingResult bindingResult) {
 
+		// RICHIAMO IL METODO SAVE PASSANDOGLI DEGLI ATTRIBUTI
 		return save(model, picture, bindingResult);
 
 	}
@@ -92,10 +99,14 @@ public class PictureController {
 		Picture pic = pictureService.findById(id);
 
 		pictureService.delete(pic);
-
+		redirectAttributes.addFlashAttribute("picDeleted", pic);
 		return "redirect:/";
 	}
 
+	// SAVE PICTURE
+
+	// METODO PER IL SALVATAGGIO RICEVE SE CI SONO DEGLI ERRORI RITORNO GLI ERRORI
+	// IN PAGINA E RENDIRIZZO ALLA PAGINA
 	public String save(Model model, @Valid @ModelAttribute Picture picture, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {

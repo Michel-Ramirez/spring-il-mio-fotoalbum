@@ -37,7 +37,6 @@ public class Picture {
 	@URL(message = "unvalid URL")
 	private String img;
 
-//	@NotNull(message = "this field is required")
 	private boolean visible;
 
 	// -----// RELAZIONE //-----//
