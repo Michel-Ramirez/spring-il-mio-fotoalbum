@@ -50,7 +50,7 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 
 		String psw = AuthConfig.passwordEncoder().encode("psw");
 
-		User user1 = new User("Michel", "Ramirez", "mich", "michel.ramirez@gmail.com", psw);
+		User user1 = new User("Michel", "Ramirez", "mich", "michel.ramirez@gmail.com", psw, role1);
 
 		userService.save(user1);
 

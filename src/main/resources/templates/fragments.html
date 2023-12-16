@@ -21,15 +21,11 @@
                     <a class="fs-5 fw-bolder pe-5 text-decoration-none text-primary" th:href="@{/}">PICTURES</a>
                     <a class="fs-5 fw-bolder pe-5 text-decoration-none text-primary"
                         th:href="@{/categories/list}">CATEGORIES</a>
-                    <a th:href="@{/messages/list}" class="btn btn-primary position-relative">
+                    <a th:href="@{/messages/list}" class="btn btn-primary position-relative me-3">
                         Messages
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            99+
-                        </span>
                     </a>
-                    <!--                    <a sec:authorize="hasAnyAuthority('USER', 'ADMIN')"-->
-                    <!--                        class="fs-5 text-decoration-none text-white btn btn-sm btn-primary"-->
-                    <!--                        th:href="@{/logout}">logout</a>-->
+                    <a class="fs-5 text-decoration-none text-white btn btn-sm btn-danger"
+                        th:href="@{/logout}">logout</a>
                 </div>
             </div>
         </div>
@@ -42,15 +38,15 @@
             </li>
         </ul>
     </div>
-    
+
     <div th:fragment="alert(var, type)" class="alert alert-danger mt-5" th:if="${var != null}">
-            <p class="m-0">[[${type}]]<span class="fw-bolder">[[${var.name}]]</span> correctly deleted</p>         
-        </div>
-        
+        <p class="m-0">[[${type}]]<span class="fw-bolder">[[${var.name}]]</span> correctly deleted</p>
+    </div>
+
     <div th:fragment="alertAdd(var, type)" class="alert alert-success mt-5" th:if="${var != null}">
-            <p class="m-0">[[${type}]]<span class="fw-bolder">[[${var.name}]]</span> correctly added</p>         
-        </div>
- 
+        <p class="m-0">[[${type}]]<span class="fw-bolder">[[${var.name}]]</span> correctly added</p>
+    </div>
+
     <footer th:fragment="footer" class="d-flex justify-content-center mt-5 pt-5 border-top">
         <p><i class="fs-5">Created with love by Michel Ramirez </i></p>
     </footer>
