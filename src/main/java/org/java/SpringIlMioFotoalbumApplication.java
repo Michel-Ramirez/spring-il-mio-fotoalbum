@@ -1,7 +1,5 @@
 package org.java;
 
-import java.time.LocalDateTime;
-
 import org.java.db.pojo.Category;
 import org.java.db.pojo.Message;
 import org.java.db.pojo.Picture;
@@ -103,29 +101,25 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		pictureService.save(foto10);
 
 		Message msg1 = new Message("Marco Rossi", "marco.rossi@example.com",
-				"Buongiorno, mi presento come nuovo membro della nostra azienda!", LocalDateTime.now());
+				"Buongiorno, mi presento come nuovo membro della nostra azienda!");
 		Message msg2 = new Message("Sofia Bianchi", "sofia.bianchi@example.com",
-				"Sono entusiasta di iniziare questa nuova avventura con voi.", LocalDateTime.now());
+				"Sono entusiasta di iniziare questa nuova avventura con voi.");
 		Message msg3 = new Message("Luca Ferrari", "luca.ferrari@example.com",
-				"Non vedo l'ora di contribuire al nostro team e crescere insieme.", LocalDateTime.now());
+				"Non vedo l'ora di contribuire al nostro team e crescere insieme.");
 		Message msg4 = new Message("Martina Esposito", "martina.esposito@example.com",
-				"Sono qui per aiutarvi in tutto ciò di cui avete bisogno.", LocalDateTime.now());
+				"Sono qui per aiutarvi in tutto ciò di cui avete bisogno.");
 		Message msg5 = new Message("Alessio Romano", "alessio.romano@example.com",
-				"Desidero ringraziarvi per questa opportunità e per il supporto.", LocalDateTime.now());
+				"Desidero ringraziarvi per questa opportunità e per il supporto.");
 		Message msg6 = new Message("Chiara Moretti", "chiara.moretti@example.com",
-				"Mi impegnerò al massimo per raggiungere gli obiettivi della nostra azienda.", LocalDateTime.now());
+				"Mi impegnerò al massimo per raggiungere gli obiettivi della nostra azienda.");
 		Message msg7 = new Message("Davide Russo", "davide.russo@example.com",
-				"Sono desideroso di imparare e sviluppare le mie competenze per contribuire al successo del team.",
-				LocalDateTime.now());
+				"Sono desideroso di imparare e sviluppare le mie competenze per contribuire al successo del team.");
 		Message msg8 = new Message("Federica Conti", "federica.conti@example.com",
-				"Non vedo l'ora di conoscere tutti voi e creare un ambiente di lavoro collaborativo.",
-				LocalDateTime.now());
+				"Non vedo l'ora di conoscere tutti voi e creare un ambiente di lavoro collaborativo.");
 		Message msg9 = new Message("Simone Marchetti", "simone.marchetti@example.com",
-				"Se avete suggerimenti o consigli da condividere, sarò più che felice di ascoltarvi.",
-				LocalDateTime.now());
+				"Se avete suggerimenti o consigli da condividere, sarò più che felice di ascoltarvi.");
 		Message msg10 = new Message("Valentina Colombo", "valentina.colombo@example.com",
-				"Grazie ancora per l'accoglienza calorosa. Non vedo l'ora di lavorare insieme a voi!",
-				LocalDateTime.now());
+				"Grazie ancora per l'accoglienza calorosa. Non vedo l'ora di lavorare insieme a voi!");
 
 		messageServ.save(msg1);
 		messageServ.save(msg2);

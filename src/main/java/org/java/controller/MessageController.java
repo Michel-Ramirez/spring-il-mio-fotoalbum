@@ -20,7 +20,7 @@ public class MessageController {
 	MessageService messageServ;
 
 	@GetMapping("/messages/list")
-	public String getPicture(Model model, @RequestParam(required = false) String query) {
+	public String getMessages(Model model, @RequestParam(required = false) String query) {
 
 		// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
 //		List<Picture> pictures = query != null ? messageServ.findByTitleOrCategory(query)

@@ -33,19 +33,19 @@ public class Message {
 	private boolean message_read;
 
 	@Column(columnDefinition = "TIMESTAMP")
-	private LocalDateTime data_recived;
+	private String data_recived;
 
 	public Message() {
 
 	}
 
-	public Message(String name, String email, String message, LocalDateTime data_recived) {
+	public Message(String name, String email, String message) {
 
 		setName(name);
 		setEmail(email);
 		setMessage(message);
 		setMessage_read(message_read);
-		setData_recived(data_recived);
+		setData_recived(LocalDateTime.now().toString());
 	}
 
 	public int getId() {
@@ -88,11 +88,13 @@ public class Message {
 		this.message_read = message_read;
 	}
 
-	public LocalDateTime getData_recived() {
+	public String getData_recived() {
+
 		return data_recived;
 	}
 
-	public void setData_recived(LocalDateTime data_recived) {
+	public void setData_recived(String data_recived) {
+
 		this.data_recived = data_recived;
 	}
 

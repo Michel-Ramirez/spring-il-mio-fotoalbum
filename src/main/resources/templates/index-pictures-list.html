@@ -20,6 +20,10 @@
 
         <h1 class="my-5">Manage your pictures</h1>
         
+       <div class="alert alert-danger mt-5" th:if="${picDeleted != null}">
+            <p class="m-0">Picture <span class="fw-bolder">[[${picDeleted.title}]]</span> correctly deleted</p>         
+        </div>
+        
         <div class="d-flex justify-content-end mb-5">
             <form class="d-flex" role="search" method="get">
                 <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="query"
