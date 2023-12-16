@@ -56,16 +56,16 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		userService.save(user1);
 		userService.save(user2);
 
-		Category cat1 = new Category("Ritratti");
-		Category cat2 = new Category("Natura morta");
-		Category cat3 = new Category("Paesaggi");
-		Category cat4 = new Category("Fotografia di viaggio");
-		Category cat5 = new Category("Fotogiornalismo");
-		Category cat6 = new Category("Architettura");
-		Category cat7 = new Category("Street photography");
-		Category cat8 = new Category("Fotografia concettuale");
-		Category cat9 = new Category("Fotografia sportiva");
-		Category cat10 = new Category("Fotografia astratta");
+		Category cat1 = new Category("Ritratti", user1);
+		Category cat2 = new Category("Natura morta", user1);
+		Category cat3 = new Category("Paesaggi", user1);
+		Category cat4 = new Category("Fotografia di viaggio", user1);
+		Category cat5 = new Category("Fotogiornalismo", user1);
+		Category cat6 = new Category("Architettura", user1);
+		Category cat7 = new Category("Street photography", user1);
+		Category cat8 = new Category("Fotografia concettuale", user1);
+		Category cat9 = new Category("Fotografia sportiva", user1);
+		Category cat10 = new Category("Fotografia astratta", user1);
 
 		catServ.save(cat1);
 		catServ.save(cat2);
@@ -127,25 +127,26 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		pictureService.save(foto10);
 
 		Message msg1 = new Message("Marco Rossi", "marco.rossi@example.com",
-				"Buongiorno, mi presento come nuovo membro della nostra azienda!");
+				"Buongiorno, mi presento come nuovo membro della nostra azienda!", user2);
 		Message msg2 = new Message("Sofia Bianchi", "sofia.bianchi@example.com",
-				"Sono entusiasta di iniziare questa nuova avventura con voi.");
+				"Sono entusiasta di iniziare questa nuova avventura con voi.", user1);
 		Message msg3 = new Message("Luca Ferrari", "luca.ferrari@example.com",
-				"Non vedo l'ora di contribuire al nostro team e crescere insieme.");
+				"Non vedo l'ora di contribuire al nostro team e crescere insieme.", user1);
 		Message msg4 = new Message("Martina Esposito", "martina.esposito@example.com",
-				"Sono qui per aiutarvi in tutto ciò di cui avete bisogno.");
+				"Sono qui per aiutarvi in tutto ciò di cui avete bisogno.", user1);
 		Message msg5 = new Message("Alessio Romano", "alessio.romano@example.com",
-				"Desidero ringraziarvi per questa opportunità e per il supporto.");
+				"Desidero ringraziarvi per questa opportunità e per il supporto.", user1);
 		Message msg6 = new Message("Chiara Moretti", "chiara.moretti@example.com",
-				"Mi impegnerò al massimo per raggiungere gli obiettivi della nostra azienda.");
+				"Mi impegnerò al massimo per raggiungere gli obiettivi della nostra azienda.", user1);
 		Message msg7 = new Message("Davide Russo", "davide.russo@example.com",
-				"Sono desideroso di imparare e sviluppare le mie competenze per contribuire al successo del team.");
+				"Sono desideroso di imparare e sviluppare le mie competenze per contribuire al successo del team.",
+				user1);
 		Message msg8 = new Message("Federica Conti", "federica.conti@example.com",
-				"Non vedo l'ora di conoscere tutti voi e creare un ambiente di lavoro collaborativo.");
+				"Non vedo l'ora di conoscere tutti voi e creare un ambiente di lavoro collaborativo.", user1);
 		Message msg9 = new Message("Simone Marchetti", "simone.marchetti@example.com",
-				"Se avete suggerimenti o consigli da condividere, sarò più che felice di ascoltarvi.");
+				"Se avete suggerimenti o consigli da condividere, sarò più che felice di ascoltarvi.", user1);
 		Message msg10 = new Message("Valentina Colombo", "valentina.colombo@example.com",
-				"Grazie ancora per l'accoglienza calorosa. Non vedo l'ora di lavorare insieme a voi!");
+				"Grazie ancora per l'accoglienza calorosa. Non vedo l'ora di lavorare insieme a voi!", user1);
 
 		messageServ.save(msg1);
 		messageServ.save(msg2);

@@ -2,6 +2,7 @@ package org.java.db.serv;
 
 import java.util.List;
 
+import org.java.auth.db.pojo.User;
 import org.java.db.pojo.Message;
 import org.java.db.repo.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class MessageService {
 
 	public Message findById(int id) {
 		return messageRepo.findById(id).get();
+	}
+
+	public List<Message> getAllMessagesByUser(User user) {
+		return messageRepo.findByUser(user);
 	}
 
 	public void save(Message message) {

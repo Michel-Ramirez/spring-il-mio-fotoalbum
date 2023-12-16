@@ -39,6 +39,8 @@ public class Message {
 	@Column(columnDefinition = "TIMESTAMP")
 	private String data_recived;
 
+	// ------------ | RELAZIONI | -----------//
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -55,13 +57,14 @@ public class Message {
 
 	}
 
-	public Message(String name, String email, String message) {
+	public Message(String name, String email, String message, User user) {
 
 		setName(name);
 		setEmail(email);
 		setMessage(message);
 		setMessage_read(message_read);
 		setData_recived(LocalDateTime.now().toString());
+		setUser(user);
 	}
 
 	public int getId() {

@@ -2,32 +2,37 @@ package org.java.controller;
 
 import java.util.List;
 
+import org.java.auth.db.pojo.User;
+import org.java.auth.db.serv.UserService;
 import org.java.db.pojo.Message;
 import org.java.db.serv.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MessageController {
 
 	@Autowired
-	MessageService messageServ;
+	private MessageService messageServ;
+
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/messages/list")
-	public String getMessages(Model model, @RequestParam(required = false) String query) {
+	public String getMessages(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
-		// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
-//		List<Picture> pictures = query != null ? messageServ.findByTitleOrCategory(query)
-//				: messageServ.getAllPicturesWithCategories();
+		String username = userDetails.getUsername();
+		User user = userService.findByUsername(username);
+		userService.findByUsername(username);
 
-		List<Message> messages = messageServ.findAll();
-
+		List<Message> messages = messageServ.getAllMessagesByUser(user);
 		model.addAttribute("messages", messages);
 
 		return "message-list";

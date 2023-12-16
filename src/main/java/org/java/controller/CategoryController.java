@@ -2,10 +2,14 @@ package org.java.controller;
 
 import java.util.List;
 
+import org.java.auth.db.pojo.User;
+import org.java.auth.db.serv.UserService;
 import org.java.db.pojo.Category;
 import org.java.db.pojo.Picture;
 import org.java.db.serv.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,10 +28,20 @@ public class CategoryController {
 	@Autowired
 	CategoryService catServ;
 
+	@Autowired
+	private UserService userService;
+
 	// ROTTA PER VEDERE LA LISTA DELLA CATEGORIE
 	@GetMapping("/categories/list")
-	public String viewCategories(Model model, @RequestParam(required = false) String query) {
-		List<Category> categories = query != null ? catServ.findByName(query) : catServ.findAll();
+	public String viewCategories(Model model, @RequestParam(required = false) String query,
+			@AuthenticationPrincipal UserDetails userDetails) {
+
+		String username = userDetails.getUsername();
+		User user = userService.findByUsername(username);
+		userService.findByUsername(username);
+
+		List<Category> categories = query != null ? catServ.findByUserAndTitleOrCategory(user, query)
+				: catServ.getAllCategoryByUser(user);
 		model.addAttribute("categories", categories);
 		return "categories-list";
 	}
