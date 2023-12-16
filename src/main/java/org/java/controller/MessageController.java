@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MessageController {
@@ -42,5 +43,14 @@ public class MessageController {
 		messageServ.save(msg);
 
 		return "redirect:/messages/list";
+	}
+
+	@PostMapping("/message/delete/{id}")
+	public String deleteMsg(@PathVariable int id, RedirectAttributes redirectAttributes) {
+		Message msg = messageServ.findById(id);
+		messageServ.delete(msg);
+		redirectAttributes.addFlashAttribute("msgDeleted", msg);
+		return "redirect:/messages/list";
+
 	}
 }

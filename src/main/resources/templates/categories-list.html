@@ -14,6 +14,10 @@
         
         <h1 class="my-5">Categories</h1>
         
+        <div th:replace="fragments :: alert(${catDeleted}, 'Category ')"></div>
+        
+        <div th:replace="fragments :: alertAdd(${catAdd}, 'Category ')" th:text="ciao"></div>
+        
         <div class="d-flex justify-content-end mb-5">
             <form class="d-flex" role="search" method="get">
                 <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="query"

@@ -44,7 +44,8 @@ public class CategoryController {
 	// ROTTA IN POST RICEVE CATEGORIE, CONTROLLA SE CI SONO ERRORI NELLA CREAZIONE E
 	// RESTITUISCE GLI ERRORI ALTRIMENTI SALVA LA CATEGORIA
 	@PostMapping("/category/create")
-	public String createCat(Model model, @Valid @ModelAttribute Category category, BindingResult bindingResult) {
+	public String createCat(Model model, @Valid @ModelAttribute Category category, BindingResult bindingResult,
+			RedirectAttributes redirectAtr) {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("category", category);
@@ -52,6 +53,8 @@ public class CategoryController {
 		}
 
 		catServ.save(category);
+
+		redirectAtr.addFlashAttribute("catAdd", category);
 
 		return "redirect:/categories/list";
 

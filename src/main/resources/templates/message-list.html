@@ -43,6 +43,8 @@
         
         <h2 class="my-5">Your messages <span th:if="${messages.size() > 0}" class="badge bg-danger" >[[${#lists.size(messages.?[message_read == false])}]]</span></h2>
         
+        <div th:replace="fragments :: alert(${msgDeleted}, 'The message by ')"></div>
+        
         <h3 th:if="${messages.size() == 0}" class="text-center">There are no messages</h3>
         
         <div class="d-flex flex-wrap">
@@ -56,11 +58,11 @@
                         <h6 class="card-subtitle mb-2 text-body-secondary">[[*{email}]]]</h6>
                         <p class="card-text">[[*{message}]]</p>                        
                     </div>
-                    <div class="mt-5 text-end">
-                        <form th:action="@{/message/read/{id}(id=${msg.id})}" method="POST">
-                            <button type="submit" class="btn btn-sm btn-warning">make as read</button>
+                    <div class="mt-5 d-flex justify-content-end">
+                        <form th:action="@{/message/read/{id}(id=${msg.id})}" method="POST" class="me-2">
+                            <button type="submit" class="btn btn-sm btn-success">make as read</button>
                         </form>
-                        <form th:action="@{/mesage/delete/{id}(id=${msg.id})}" method="POST">
+                        <form th:action="@{/message/delete/{id}(id=${msg.id})}" method="POST">
                             <button type="submit" class="btn btn-sm btn-danger">delete</button>
                         </form>                        
                     </div>
