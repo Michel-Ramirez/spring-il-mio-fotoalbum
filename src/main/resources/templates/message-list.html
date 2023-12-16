@@ -4,26 +4,64 @@
 <head>
     <meta charset="ISO-8859-1">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Messages</title>
+    <style>
+        .not-read.card {
+           background-color: cadetblue;
+        }
+    </style>
 </head>
 
 <body>
-    <header th:replace="fragments :: header"></header>
+    <header style="box-shadow: 0px 14px 16px -5px rgba(125,125,125,0.68);">
+        <div class="container pt-3">
+            <div class="row">
+                <div class="col-2">
+                    <h2 class="text-red fw-bolder fs-2">SPRING OF PICTURES...</h2>
+
+                </div>
+                <div class="col d-flex justify-content-end align-items-center">
+                    <a class="fs-5 fw-bolder pe-5 text-decoration-none text-primary" th:href="@{/}">PICTURES</a>
+                    <a class="fs-5 fw-bolder pe-5 text-decoration-none text-primary"
+                        th:href="@{/categories/list}">CATEGORIES</a>
+                    <a th:href="@{/messages/list}" class="btn btn-primary position-relative">
+                        Messages
+                        <span th:if="${messages.size() > 0}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            [[${messages.size()}]]
+                        </span>
+                    </a>
+                    <!--                    <a sec:authorize="hasAnyAuthority('USER', 'ADMIN')"-->
+                    <!--                        class="fs-5 text-decoration-none text-white btn btn-sm btn-primary"-->
+                    <!--                        th:href="@{/logout}">logout</a>-->
+                </div>
+            </div>
+        </div>
+    </header>
 
     <main class="container"> 
         
-        <h2 class="my-5">Your messages</h2>
-<!--        <span>You have [[${messages.size()}]] messages</span>-->
+        <h2 class="my-5">Your messages <span th:if="${messages.size > 0}" class="badge bg-danger" >[[${messages.size()}]]</span></h2>
         
-        <div class="card mt-5" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
+        <h3 th:if="${messages.size() == 0}" class="text-center">There are no messages</h3>
+        
+        <div class="d-flex flex-wrap">
+            <div th:each="msg : ${messages}" th:object="${msg}" style="width: 18rem;" th:class="${message_read} ? 'not-read card m-3' : 'card m-3'">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <span th:if="${!msg.message_read}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <i class="fa-regular fa-envelope"></i>
+                        </span>      
+                        <h5 class="card-title">[[*{name}]]</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">[[*{email}]]]</h6>
+                        <p class="card-text">[[*{message}]]</p>                        
+                    </div>
+                    <div class="mt-5 text-end">
+                        <a href="#" class="btn btn-sm btn-warning">mark as read</a>
+                        <a href="#" class="btn btn-sm btn-danger">delete</a>                        
+                    </div>
+                </div>
+            </div>            
         </div>
     </main>
 </body>

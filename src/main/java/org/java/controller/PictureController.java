@@ -30,7 +30,7 @@ public class PictureController {
 
 	// ROTTA PER LA HOME DOVE MOSTRO TUTE LE PC
 	@GetMapping("/")
-	public String getFoto(Model model, @RequestParam(required = false) String query) {
+	public String getPicture(Model model, @RequestParam(required = false) String query) {
 
 		// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
 		List<Picture> pictures = query != null ? pictureService.findByTitleOrCategory(query)
