@@ -51,10 +51,12 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		String psw = AuthConfig.passwordEncoder().encode("psw");
 
 		User user1 = new User("Michel", "Ramirez", "mich", "michel.ramirez@gmail.com", psw, role1);
-		User user2 = new User("Michel", "Ramirez", "user", "user.ramirez@gmail.com", psw, role1);
+		User user2 = new User("Gino", "Pino", "user", "gino.pino@gmail.com", psw, role1);
+		User user3 = new User("Scola", "Pasta", "superadmin", "scola.pasta@gmail.com", psw, role2);
 
 		userService.save(user1);
 		userService.save(user2);
+		userService.save(user3);
 
 		Category cat1 = new Category("Ritratti", user1);
 		Category cat2 = new Category("Natura morta", user1);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.java.auth.db.pojo.User;
 import org.java.auth.db.serv.UserService;
 import org.java.db.pojo.Category;
+import org.java.db.pojo.Message;
 import org.java.db.pojo.Picture;
 import org.java.db.serv.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,19 @@ public class CategoryController {
 		User user = userService.findByUsername(username);
 		userService.findByUsername(username);
 
+		List<Message> messages = user.getMessages();
+		int unreadMessagesCount = 0;
+
+		for (Message message : messages) {
+			if (!message.isMessage_read()) {
+				unreadMessagesCount++;
+			}
+		}
+
 		List<Category> categories = query != null ? catServ.findByUserAndTitleOrCategory(user, query)
 				: catServ.getAllCategoryByUser(user);
 		model.addAttribute("categories", categories);
+		model.addAttribute("messagesSize", unreadMessagesCount);
 		return "categories-list";
 	}
 

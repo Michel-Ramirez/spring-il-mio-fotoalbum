@@ -2,9 +2,11 @@ package org.java.controller;
 
 import java.util.List;
 
+import org.java.auth.db.pojo.Role;
 import org.java.auth.db.pojo.User;
 import org.java.auth.db.serv.UserService;
 import org.java.db.pojo.Category;
+import org.java.db.pojo.Message;
 import org.java.db.pojo.Picture;
 import org.java.db.serv.CategoryService;
 import org.java.db.serv.PictureService;
@@ -40,35 +42,66 @@ public class PictureController {
 	public String getPicture(Model model, @RequestParam(required = false) String query,
 			@AuthenticationPrincipal UserDetails userDetails) {
 
+		// OTTENGO IL USERNAME DEL UTENTE LOGGATO
 		String username = userDetails.getUsername();
+
+		// OTTENGO L'UTENTE LOGGATO TRAMITE IL USERNAME
 		User user = userService.findByUsername(username);
-		userService.findByUsername(username);
 
-		// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
-		List<Picture> pictures = query != null ? pictureService.findByUserAndTitleOrCategory(user, query)
-				: pictureService.getAllPicturesByUser(user);
+		int unreadMessagesCount = unreadMsgCount(user);
 
-		model.addAttribute("pictures", pictures);
+		if (userHasRole(user, "SUPERADMIN")) {
+
+			System.out.println("ENTRA");
+			List<Picture> pictures = query != null ? pictureService.findByTitle(query) : pictureService.findAll();
+			model.addAttribute("pictures", pictures);
+		} else {
+			// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
+			List<Picture> pictures = query != null ? pictureService.findByUserAndTitleOrCategory(user, query)
+					: pictureService.getAllPicturesByUser(user);
+
+			model.addAttribute("pictures", pictures);
+		}
+
+		model.addAttribute("username", username);
+		model.addAttribute("messagesSize", unreadMessagesCount);
 		return "index-pictures-list";
 
 	}
 
+	private boolean userHasRole(User user, String roleName) {
+
+		for (Role role : user.getRoles()) {
+			if (role.getName().equals(roleName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	// ROTTA PER IL DETTAGLIO DELLA PC
 	@GetMapping("/picture/{id}")
-	public String detailPicture(Model model, @PathVariable int id) {
+	public String detailPicture(Model model, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+
+		String username = userDetails.getUsername();
+		User user = userService.findByUsername(username);
+
+		int unreadMessagesCount = unreadMsgCount(user);
 
 		Picture picture = pictureService.findById(id);
 		List<Category> cat = picture.getCategories();
 
 		model.addAttribute("picture", picture);
 		model.addAttribute("categories", cat);
+		model.addAttribute("messagesSize", unreadMessagesCount);
 		return "detail-picture";
 
 	}
 
 	// ROTTA PER LA CREAZIONE DELLA PC
 	@GetMapping("/picture/create")
-	public String viewPage(Model model) {
+	public String viewPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
 		Picture picture = new Picture();
 
@@ -142,6 +175,18 @@ public class PictureController {
 	public List<Category> getCategories(Model model) {
 		List<Category> categories = catServ.findAll();
 		return categories;
+	}
+
+	private int unreadMsgCount(User user) {
+		List<Message> messages = user.getMessages();
+		int unreadMessagesCount = 0;
+
+		for (Message message : messages) {
+			if (!message.isMessage_read()) {
+				unreadMessagesCount++;
+			}
+		}
+		return unreadMessagesCount;
 	}
 
 }

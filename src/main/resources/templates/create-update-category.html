@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <header th:replace="fragments :: header"></header>
+    <header th:replace="fragments :: header(messagesSize)"></header>
 
     <main class="container">
         <form class="d-flex justify-content-center mt-5" method="POST" th:object="${category}">

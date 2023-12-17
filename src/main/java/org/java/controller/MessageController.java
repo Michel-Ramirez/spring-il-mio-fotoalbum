@@ -30,11 +30,10 @@ public class MessageController {
 
 		String username = userDetails.getUsername();
 		User user = userService.findByUsername(username);
-		userService.findByUsername(username);
 
 		List<Message> messages = messageServ.getAllMessagesByUser(user);
 		model.addAttribute("messages", messages);
-
+		model.addAttribute("username", username);
 		return "message-list";
 
 	}

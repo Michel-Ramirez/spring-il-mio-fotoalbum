@@ -38,10 +38,10 @@ public class PictureService {
 		return pictureRepo.findByUser(user);
 	}
 
-//	public List<Picture> findByTitleOrCategory(String value) {
-//
-//		return pictureRepo.findPicturesByPictureTilteOrCategoryName(value);
-//	}
+	public List<Picture> findByTitle(String value) {
+
+		return pictureRepo.findByTitleContainingIgnoreCase(value);
+	}
 
 	public List<Picture> getAllPicturesWithCategories() {
 		List<Picture> pictures = pictureRepo.findAll();

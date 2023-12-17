@@ -13,11 +13,14 @@
 </head>
 
 <body>
-    <header th:replace="fragments :: header"></header>
-
+    <header th:replace="fragments :: header(${messagesSize})"></header>
 
     <main class="container">
-
+        
+        <div class="d-flex justify-content-end">
+            <span class="fs-4">Username: [[${username}]]</span>
+        </div>
+        
         <h1 class="my-5">Manage your pictures</h1>
         
        <div class="alert alert-danger mt-5" th:if="${picDeleted != null}">
