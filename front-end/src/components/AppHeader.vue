@@ -7,6 +7,10 @@
                 <div class="col-3">
                     <h2 class="fs-1 fw-bold ">Spring of pictures...</h2>
                 </div>
+                <div class="col d-flex justify-content-end align-items-center">
+                    <a href="http://127.0.0.1:8080" class="btn btn-primary me-3">Sing Up</a>
+                    <a href="http://127.0.0.1:8080/login" class="btn btn-primary me-3">Log in</a>
+                </div>
             </div>
         </div>
     </header>

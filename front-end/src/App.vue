@@ -7,14 +7,18 @@ import { ref } from 'vue'
 const picture = ref(null)
 const openPicture = (pic) => {
   picture.value = pic
-  console.log(pic)
+
+}
+
+const closePic = (closePic) => {
+  picture.value = closePic
 }
 </script>
 
 <template>
   <AppHeader />
   <AppMain @openPicture="openPicture" v-if="!picture" />
-  <AppShowPicture :picture="picture" v-else />
+  <AppShowPicture :picture="picture" @closePic="closePic" v-else />
 </template>
 
 <style scoped></style>

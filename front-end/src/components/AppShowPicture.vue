@@ -1,19 +1,41 @@
 <script setup>
 import { ref, defineProps } from 'vue'
+import axios from 'axios'
 
 const props = defineProps({
     picture: Object
 })
 
+const alert = ref(false);
+
+const message = ref({
+    name: "",
+    email: "",
+    message: ""
+})
+
+
+const sendMessage = async () => {
+
+    const data = await axios.post(`http://localhost:8080/api/v1.0/messages?userId=${picture.user.id}`, message.value);
+
+    if (data.status === 200) {
+        alert.value = true
+    }
+}
 const picture = props.picture
 </script>
 
 <template>
     <main class="container mb-5">
 
+        <div class="mt-5 d-flex justify-content-end ">
+            <div @click="$emit('closePic', picture == null)" class="btn btn-secondary">Return to Home</div>
+        </div>
+
         <h1 class="my-5">{{ picture.title }}</h1>
 
-        <figure>
+        <figure class="d-flex justify-content-center ">
             <img :src="picture.img" :alt="picture.title" class="img-fluid">
         </figure>
         <p class="text-start">
@@ -26,22 +48,28 @@ const picture = props.picture
         <h2 class="mt-5 pb-5">If you wish to contact the photographer you can do so here</h2>
 
         <div class="d-flex justify-content-center my-5">
-            <form>
+            <form @submit.prevent="sendMessage" method="POST">
                 <h4 class="mb-3">Contact</h4>
+
+                <div v-if="alert" class="alert alert-success">
+                    <p class="m-0">Message sent successfully</p>
+                </div>
+
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-6">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name">
+                            <input type="text" class="form-control" id="name" name="name" v-model.trim="message.name">
                         </div>
                         <div class="col-6">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" id="email" name="email" v-model.trim="message.email">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" rows="3"></textarea>
+                        <textarea class="form-control" id="description" rows="3" name="text"
+                            v-model.trim="message.message"></textarea>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5">

@@ -7,7 +7,6 @@ const pictures = ref(null);
 const fetchPictures = async () => {
 
     if (term.value !== "") {
-        console.log(term.value)
         const data = await axios.get(`http://127.0.0.1:8080/api/v1.0/pictures?query=${term.value}`);
         pictures.value = data.data;
     } else {
@@ -33,7 +32,7 @@ onMounted(fetchPictures)
 
         <div class="d-flex flex-wrap ">
             <div v-for="pic in pictures" @click="$emit('openPicture', pic)" class="card m-3" style="width: 25rem;">
-                <img :src="pic.img" class="card-img-top img-fluid " alt="...">
+                <img :src="pic.img" class="card-img-top img-fluid mt-3" alt="...">
                 <div class="card-body d-flex flex-column justify-content-between">
                     <div class="mb-5">
                         <h5 class="card-title">{{ pic.title }}</h5>
