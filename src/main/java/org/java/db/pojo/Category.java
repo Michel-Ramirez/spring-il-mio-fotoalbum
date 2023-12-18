@@ -31,13 +31,13 @@ public class Category {
 
 	// ----------| RELAZIONI |------------//
 	@ManyToMany(mappedBy = "categories")
-	@JsonIgnore
 	private List<Picture> pictures;
 
 	public List<Picture> getPictures() {
 		return pictures;
 	}
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

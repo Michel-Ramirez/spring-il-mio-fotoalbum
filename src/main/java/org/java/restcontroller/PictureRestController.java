@@ -3,6 +3,7 @@ package org.java.restcontroller;
 import java.util.List;
 
 import org.java.db.pojo.Picture;
+import org.java.db.serv.CategoryService;
 import org.java.db.serv.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,15 +22,15 @@ public class PictureRestController {
 	@Autowired
 	private PictureService pictureService;
 
+	@Autowired
+	private CategoryService categoryService;
+
 	@GetMapping
 	public ResponseEntity<List<Picture>> getAllPicture(@RequestParam(required = false) String query) {
 
-		// List<Picture> pictures = query != null ? pictureService.findByTitle(query) :
-		// pictureService.findAll();
 		try {
-			List<Picture> pictures = pictureService.findAll();
+			List<Picture> pictures = query != null ? pictureService.findByTitle(query) : pictureService.findAll();
 
-			System.out.println("IMMAGINI : " + pictures);
 			return new ResponseEntity<>(pictures, HttpStatus.OK);
 
 		} catch (Exception e) {
