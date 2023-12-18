@@ -32,7 +32,7 @@ onMounted(fetchPictures)
         </div>
 
         <div class="d-flex flex-wrap ">
-            <div v-for="pic in pictures" class="card m-3" style="width: 25rem;">
+            <div v-for="pic in pictures" @click="$emit('openPicture', pic)" class="card m-3" style="width: 25rem;">
                 <img :src="pic.img" class="card-img-top img-fluid " alt="...">
                 <div class="card-body d-flex flex-column justify-content-between">
                     <div class="mb-5">

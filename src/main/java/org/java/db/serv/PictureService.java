@@ -26,6 +26,10 @@ public class PictureService {
 		pictureRepo.save(picture);
 	}
 
+	public List<Picture> findVidibleTrue() {
+		return pictureRepo.findByVisibleTrue();
+	}
+
 	public void delete(Picture picture) {
 		pictureRepo.delete(picture);
 	}
@@ -40,7 +44,7 @@ public class PictureService {
 
 	public List<Picture> findByTitle(String value) {
 
-		return pictureRepo.findByTitleContainingIgnoreCase(value);
+		return pictureRepo.findByTitleContainingIgnoreCaseAndVisibleTrue(value);
 	}
 
 	public List<Picture> getAllPicturesWithCategories() {

@@ -1,12 +1,20 @@
 <script setup>
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
+import AppShowPicture from './components/AppShowPicture.vue';
+import { ref } from 'vue'
 
+const picture = ref(null)
+const openPicture = (pic) => {
+  picture.value = pic
+  console.log(pic)
+}
 </script>
 
 <template>
   <AppHeader />
-  <AppMain :pictures="pictures" />
+  <AppMain @openPicture="openPicture" v-if="!picture" />
+  <AppShowPicture :picture="picture" v-else />
 </template>
 
 <style scoped></style>

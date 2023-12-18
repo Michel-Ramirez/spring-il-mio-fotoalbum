@@ -29,7 +29,8 @@ public class PictureRestController {
 	public ResponseEntity<List<Picture>> getAllPicture(@RequestParam(required = false) String query) {
 
 		try {
-			List<Picture> pictures = query != null ? pictureService.findByTitle(query) : pictureService.findAll();
+			List<Picture> pictures = query != null ? pictureService.findByTitle(query)
+					: pictureService.findVidibleTrue();
 
 			return new ResponseEntity<>(pictures, HttpStatus.OK);
 
