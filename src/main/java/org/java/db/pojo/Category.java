@@ -30,6 +30,7 @@ public class Category {
 	private String name;
 
 	// ----------| RELAZIONI |------------//
+	@JsonIgnore
 	@ManyToMany(mappedBy = "categories")
 	private List<Picture> pictures;
 

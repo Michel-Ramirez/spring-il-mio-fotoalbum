@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.URL;
 import org.java.auth.db.pojo.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,7 +44,6 @@ public class Picture {
 
 	// -----// RELAZIONE //-----//
 
-	@JsonIgnore
 	@ManyToOne
 	private User user;
 
@@ -55,6 +55,7 @@ public class Picture {
 		this.user = user;
 	}
 
+	@JsonProperty
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Category> categories;
 

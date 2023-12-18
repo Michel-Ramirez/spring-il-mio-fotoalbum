@@ -40,16 +40,19 @@ public class User implements UserDetails {
 	@NotBlank(message = "this flield is required")
 	private String username;
 
+	@JsonIgnore
 	@Column(nullable = false, unique = true)
 	@NotBlank(message = "this flield is required")
 	private String email;
 
+	@JsonIgnore
 	@Column(nullable = false)
 	@NotBlank(message = "this flield is required")
 	private String password;
 
 //-----| RELAZIONI | ------//
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Picture> pictures;
 
@@ -61,6 +64,7 @@ public class User implements UserDetails {
 		this.pictures = pictures;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Message> messages;
 
@@ -96,7 +100,7 @@ public class User implements UserDetails {
 
 	public User(String name, String surname, String username, String email, String password, Role... roles) {
 
-		setName(surname);
+		setName(name);
 		setSurname(surname);
 		setUsername(username);
 		setEmail(email);
