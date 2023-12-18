@@ -33,6 +33,7 @@ public class MessageController {
 
 		List<Message> messages = messageServ.getAllMessagesByUser(user);
 		model.addAttribute("messages", messages);
+
 		model.addAttribute("username", username);
 		return "message-list";
 

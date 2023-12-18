@@ -18,6 +18,10 @@ public class RoleService {
 		return roleRepository.findAll();
 	}
 
+	public Role findByName(String value) {
+		return roleRepository.findByName(value);
+	}
+
 	public Role findById(int id) {
 
 		return roleRepository.findById(id).get();

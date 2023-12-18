@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Integer> {
-	List<Message> findByNameContainingIgnoreCase(String value);
 
 	List<Message> findByUser(User user);
 }

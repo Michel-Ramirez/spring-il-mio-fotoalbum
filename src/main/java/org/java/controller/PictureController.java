@@ -38,7 +38,7 @@ public class PictureController {
 	private UserService userService;
 
 	// ROTTA PER LA HOME DOVE MOSTRO TUTE LE PC
-	@GetMapping("/")
+	@GetMapping("/pictures")
 	public String getPicture(Model model, @RequestParam(required = false) String query,
 			@AuthenticationPrincipal UserDetails userDetails) {
 
@@ -68,6 +68,8 @@ public class PictureController {
 		return "index-pictures-list";
 
 	}
+
+	// -------| FIND ROLE | ------- //
 
 	private boolean userHasRole(User user, String roleName) {
 
@@ -150,7 +152,7 @@ public class PictureController {
 
 		pictureService.delete(pic);
 		redirectAttributes.addFlashAttribute("picDeleted", pic);
-		return "redirect:/";
+		return "redirect:/pictures";
 	}
 
 	// SAVE PICTURE

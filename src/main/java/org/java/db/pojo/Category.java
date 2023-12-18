@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 import org.java.auth.db.pojo.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class Category {
 
 	// ----------| RELAZIONI |------------//
 	@ManyToMany(mappedBy = "categories")
+	@JsonIgnore
 	private List<Picture> pictures;
 
 	public List<Picture> getPictures() {

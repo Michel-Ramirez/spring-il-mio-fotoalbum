@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,7 +37,7 @@ public class User implements UserDetails {
 	private String surname;
 
 	@Column(nullable = false, unique = true)
-//	@NotBlank(message = "this flield is required")
+	@NotBlank(message = "this flield is required")
 	private String username;
 
 	@Column(nullable = false, unique = true)
@@ -71,6 +73,7 @@ public class User implements UserDetails {
 	}
 
 	// RELAZIONE TRA GLI USE E I RUOLI
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Role> roles;
 
