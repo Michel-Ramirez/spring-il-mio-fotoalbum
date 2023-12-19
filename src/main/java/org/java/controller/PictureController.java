@@ -55,7 +55,7 @@ public class PictureController {
 			model.addAttribute("pictures", pictures);
 		} else {
 			// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
-			List<Picture> pictures = query != null ? pictureService.findByUserAndTitleOrCategory(user, query)
+			List<Picture> pictures = query != null ? pictureService.findByUserAndTitle(user, query)
 					: pictureService.getAllPicturesByUser(user);
 
 			model.addAttribute("pictures", pictures);

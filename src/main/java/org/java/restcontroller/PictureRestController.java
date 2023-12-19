@@ -22,9 +22,6 @@ public class PictureRestController {
 	@Autowired
 	private PictureService pictureService;
 
-	@Autowired
-	private CategoryService categoryService;
-
 	@GetMapping
 	public ResponseEntity<List<Picture>> getAllPicture(@RequestParam(required = false) String query) {
 
