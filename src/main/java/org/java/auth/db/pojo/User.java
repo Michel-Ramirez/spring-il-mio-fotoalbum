@@ -45,7 +45,6 @@ public class User implements UserDetails {
 	@NotBlank(message = "this flield is required")
 	private String email;
 
-	@JsonIgnore
 	@Column(nullable = false)
 	@NotBlank(message = "this flield is required")
 	private String password;

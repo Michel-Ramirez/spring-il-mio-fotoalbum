@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Picture List</title>
+    <style>
+        img {
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <header th:replace="fragments :: header(${messagesSize})"></header>
+
+    <main class="container">
+        
+        <div class="d-flex justify-content-end">
+            <span class="fs-4">Username: [[${username}]]</span>
+        </div>
+        
+        <h1 class="my-5">Manage your pictures</h1>
+        
+       <div class="alert alert-danger mt-5" th:if="${picDeleted != null}">
+            <p class="m-0">Picture <span class="fw-bolder">[[${picDeleted.title}]]</span> correctly deleted</p>         
+        </div>
+        
+        <div class="d-flex justify-content-end mb-5">
+            <form class="d-flex" role="search" method="get">
+                <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="query"
+                    th:value="${query}">
+                <button class="btn btn-outline-success me-3" type="submit">Search</button>
+            </form>
+            <a th:replace="fragments :: button(@{/picture/create}, 'Add picture')"></a>
+        </div>
+
+        <h2 th:if="${pictures.size() == 0}" class="text-center pt-3">Sorry there are currently no images :(</h2>
+
+        <table th:if="${pictures.size() > 0}" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Categories</th>
+                    <th scope="col">Visible</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="picture : ${pictures}" th:object="${picture}">
+                    <th scope="row">[[*{id}]]</th>
+                    <td>
+                        <img th:src="${picture.img}" />
+                    </td>
+                    <td class="fw-bolder">[[*{title}]]</td>
+                    <td>[[*{description}]]</td>
+                    <td>
+                        <span th:each="cat : ${picture.categories}" th:object="${cat}"
+                            class="badge text-bg-primary me-2 my-1 fs-6">
+                            [[*{name}]]
+                        </span>
+                    </td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                th:checked="${picture.visible}" disabled>
+                        </div>
+                    </td>
+                    <td class="text-end">
+                        <a th:replace="fragments :: button(@{/picture/{id}(id=${picture.id})}, 'view')"></a>
+                        <a th:href="@{/picture/edit/{id}(id=${picture.id})}"
+                            class="btn btn-sm btn-warning my-3">edit</a>
+                        <form th:action="@{/picture/delete/{id}(id=${picture.id})}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

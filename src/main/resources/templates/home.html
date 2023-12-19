@@ -60,7 +60,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Password*</label>
-                    <input type="password" id="inputPassword" class="form-control" name="password">
+                    <input type="password" id="inputPassword" class="form-control" th:field="${password}">
                     <div th:replace="fragments :: alertError('password')"></div>
                 </div>
                 <div class="d-flex justify-content-center my-5">
