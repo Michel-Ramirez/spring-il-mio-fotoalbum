@@ -84,7 +84,8 @@ public class PictureController {
 	@GetMapping("/picture/{id}")
 	public String detailPicture(Model model, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
 
-		if (userDetails == null) return "redirect:/login";
+		if (userDetails == null)
+			return "redirect:/login";
 
 		User user = getUserIsLog(userDetails);
 
@@ -104,7 +105,8 @@ public class PictureController {
 	@GetMapping("/picture/create")
 	public String viewPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
-		if (userDetails == null) return "redirect:/login";
+		if (userDetails == null)
+			return "redirect:/login";
 		Picture picture = new Picture();
 
 		model.addAttribute("picture", picture);
@@ -130,12 +132,20 @@ public class PictureController {
 	@GetMapping("/picture/edit/{id}")
 	public String editPicture(Model model, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
 
-		if (userDetails == null) return "redirect:/login";
+		if (userDetails == null)
+			return "redirect:/login";
 		User user = getUserIsLog(userDetails);
 
 		Picture picture = pictureService.findById(id);
 
-		if(picture.getUser().getId() != user.getId()){
+		if (userHasRole(user, "SUPERADMIN")) {
+			model.addAttribute("categories", getCategories(model));
+			model.addAttribute("picture", picture);
+
+			return "create-update-pic";
+		}
+
+		if (picture.getUser().getId() != user.getId()) {
 
 			return "not-auth";
 		}
@@ -154,13 +164,14 @@ public class PictureController {
 	}
 
 	@PostMapping("/picture/delete/{id}")
-	public String delete(Model model, @PathVariable int id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails ) {
+	public String delete(Model model, @PathVariable int id, RedirectAttributes redirectAttributes,
+			@AuthenticationPrincipal UserDetails userDetails) {
 
 		User user = getUserIsLog(userDetails);
 
 		Picture pic = pictureService.findById(id);
 
-		if(pic.getUser().getId() != user.getId()){
+		if (pic.getUser().getId() != user.getId()) {
 
 			return "not-auth";
 		}
@@ -189,13 +200,12 @@ public class PictureController {
 		return "redirect:/picture/" + id;
 	}
 
-	public User getUserIsLog(UserDetails userDetails){
+	public User getUserIsLog(UserDetails userDetails) {
 		String username = userDetails.getUsername();
 		User user = userService.findByUsername(username);
 
 		return user;
 	}
-
 
 	public List<Category> getCategories(Model model) {
 		List<Category> categories = catServ.findAll();
