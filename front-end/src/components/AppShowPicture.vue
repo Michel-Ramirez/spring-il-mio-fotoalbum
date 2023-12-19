@@ -31,7 +31,7 @@ const sendMessage = async () => {
     } else {
         const data = await axios.post(`http://localhost:8080/api/v1.0/messages?userId=${picture.user.id}`, message.value);
         if (data.status === 200) {
-            alert.value = true
+            alertMsgSended.value = true
         }    
     }
 
