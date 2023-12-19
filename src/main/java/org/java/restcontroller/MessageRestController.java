@@ -31,6 +31,8 @@ public class MessageRestController {
 		User user = userService.findById(userId);
 		Message msg = new Message(message.getName(), message.getEmail(), message.getMessage(), user);
 
+		messageService.save(msg);
+
 		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 }

@@ -17,13 +17,15 @@ public class AuthConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf().disable().cors().disable().authorizeHttpRequests().requestMatchers("/api/v1.0/**").permitAll()
-				.requestMatchers("/**").permitAll().requestMatchers("/pictures/**")
-				.hasAnyAuthority("ADMIN", "SUPERADMIN").requestMatchers("/picture/**")
-				.hasAnyAuthority("ADMIN", "SUPERADMIN").requestMatchers("/categories/**")
-				.hasAnyAuthority("ADMIN", "SUPERADMIN").requestMatchers("/category/**")
-				.hasAnyAuthority("ADMIN", "SUPERADMIN").requestMatchers("/messages/**")
-				.hasAnyAuthority("ADMIN", "SUPERADMIN").requestMatchers("/message/**")
-				.hasAnyAuthority("ADMIN", "SUPERADMIN").requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll()
+				.requestMatchers("/**").permitAll()
+				.requestMatchers("/pictures/**").hasAnyAuthority("ADMIN", "SUPERADMIN")
+				.requestMatchers("/picture/**").hasAnyAuthority("ADMIN", "SUPERADMIN")
+				.requestMatchers("/picture/create").hasAnyAuthority("ADMIN", "SUPERADMIN")
+				.requestMatchers("/categories/**").hasAnyAuthority("ADMIN", "SUPERADMIN")
+				.requestMatchers("/category/**").hasAnyAuthority("ADMIN", "SUPERADMIN")
+				.requestMatchers("/messages/**").hasAnyAuthority("ADMIN", "SUPERADMIN")
+				.requestMatchers("/message/**").hasAnyAuthority("ADMIN", "SUPERADMIN")
+				.requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll()
 				.and().formLogin().and().logout();
 
 		return http.build();

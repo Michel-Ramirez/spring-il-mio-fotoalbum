@@ -28,7 +28,7 @@
     <main class="container">
         <h1 class="my-5">Welcome to Spring of picture...</h1>
 
-        <form class="d-flex justify-content-center" method="POST" th:object="${newUser}">
+        <form class="d-flex justify-content-center" method="POST" th:object="${user}">
             <div class="wrapper">
 
                 <h3 class="my-3">Are you a new user? Register</h3>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Password*</label>
-                    <input type="password" id="inputPassword" class="form-control" th:field="${password}">
+                    <input type="password" id="inputPassword" class="form-control" th:field="*{password}">
                     <div th:replace="fragments :: alertError('password')"></div>
                 </div>
                 <div class="d-flex justify-content-center my-5">

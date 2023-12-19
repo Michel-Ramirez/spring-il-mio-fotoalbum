@@ -42,11 +42,9 @@ public class PictureController {
 	public String getPicture(Model model, @RequestParam(required = false) String query,
 			@AuthenticationPrincipal UserDetails userDetails) {
 
-		// OTTENGO IL USERNAME DEL UTENTE LOGGATO
 		String username = userDetails.getUsername();
 
-		// OTTENGO L'UTENTE LOGGATO TRAMITE IL USERNAME
-		User user = userService.findByUsername(username);
+		User user = getUserIsLog(userDetails);
 
 		int unreadMessagesCount = unreadMsgCount(user);
 
@@ -86,8 +84,9 @@ public class PictureController {
 	@GetMapping("/picture/{id}")
 	public String detailPicture(Model model, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
 
-		String username = userDetails.getUsername();
-		User user = userService.findByUsername(username);
+		if (userDetails == null) return "redirect:/login";
+
+		User user = getUserIsLog(userDetails);
 
 		int unreadMessagesCount = unreadMsgCount(user);
 
@@ -105,6 +104,7 @@ public class PictureController {
 	@GetMapping("/picture/create")
 	public String viewPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
+		if (userDetails == null) return "redirect:/login";
 		Picture picture = new Picture();
 
 		model.addAttribute("picture", picture);
@@ -128,9 +128,17 @@ public class PictureController {
 	}
 
 	@GetMapping("/picture/edit/{id}")
-	public String editPicture(Model model, @PathVariable int id) {
+	public String editPicture(Model model, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+
+		if (userDetails == null) return "redirect:/login";
+		User user = getUserIsLog(userDetails);
 
 		Picture picture = pictureService.findById(id);
+
+		if(picture.getUser().getId() != user.getId()){
+
+			return "not-auth";
+		}
 
 		model.addAttribute("categories", getCategories(model));
 		model.addAttribute("picture", picture);
@@ -146,9 +154,16 @@ public class PictureController {
 	}
 
 	@PostMapping("/picture/delete/{id}")
-	public String delete(Model model, @PathVariable int id, RedirectAttributes redirectAttributes) {
+	public String delete(Model model, @PathVariable int id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails ) {
+
+		User user = getUserIsLog(userDetails);
 
 		Picture pic = pictureService.findById(id);
+
+		if(pic.getUser().getId() != user.getId()){
+
+			return "not-auth";
+		}
 
 		pictureService.delete(pic);
 		redirectAttributes.addFlashAttribute("picDeleted", pic);
@@ -173,6 +188,14 @@ public class PictureController {
 
 		return "redirect:/picture/" + id;
 	}
+
+	public User getUserIsLog(UserDetails userDetails){
+		String username = userDetails.getUsername();
+		User user = userService.findByUsername(username);
+
+		return user;
+	}
+
 
 	public List<Category> getCategories(Model model) {
 		List<Category> categories = catServ.findAll();
