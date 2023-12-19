@@ -47,9 +47,13 @@ const picture = props.picture
             <div @click="$emit('closePic', picture == null)" class="btn btn-secondary">Return to Home</div>
         </div>
 
-        <h1 class="my-5">{{ picture.title }}</h1>
+        <h1 class="mt-5">{{ picture.title }}</h1>
 
-        <figure class="d-flex justify-content-center ">
+        <span v-if="picture.categories" v-for="cat in picture.categories" class="text-end">
+            <span class="badge text-bg-primary m-1">{{cat.name}}</span>
+        </span>
+
+        <figure class="d-flex justify-content-center mt-5">
             <img :src="picture.img" :alt="picture.title" class="img-fluid">
         </figure>
         <p class="text-start">
