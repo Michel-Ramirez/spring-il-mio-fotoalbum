@@ -24,15 +24,15 @@ const sendMessage = async () => {
         errorName.value = true
     } else if (message.value.email === "") {
         errorEmail.value = true
-        
-    } else if(message.value.message === "") {
+
+    } else if (message.value.message === "") {
 
         errorMessage.value = true
     } else {
         const data = await axios.post(`http://localhost:8080/api/v1.0/messages?userId=${picture.user.id}`, message.value);
         if (data.status === 200) {
             alertMsgSended.value = true
-        }    
+        }
     }
 
 
@@ -49,19 +49,11 @@ const picture = props.picture
 
         <h1 class="mt-5">{{ picture.title }}</h1>
 
-<<<<<<< HEAD
-        <div>
-            <div v-for="cat in picture.categories" class="badge text-bg-primary me-3 mb-5">{{ cat.name }}</div>
-        </div>
-
-        <figure class="d-flex justify-content-center ">
-=======
         <span v-if="picture.categories" v-for="cat in picture.categories" class="text-end">
-            <span class="badge text-bg-primary m-1">{{cat.name}}</span>
+            <span class="badge text-bg-primary m-1">{{ cat.name }}</span>
         </span>
 
         <figure class="d-flex justify-content-center mt-5">
->>>>>>> 8565c3ece541b3542ffdc66fc2b7df663092be85
             <img :src="picture.img" :alt="picture.title" class="img-fluid">
         </figure>
         <p class="text-start">
@@ -102,9 +94,9 @@ const picture = props.picture
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" rows="3" name="text"
                             v-model.trim="message.message"></textarea>
-                            <div v-if="errorMessage" class="alert alert-danger">
-                                <p class="m-0">this field is required</p>
-                            </div>
+                        <div v-if="errorMessage" class="alert alert-danger">
+                            <p class="m-0">this field is required</p>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5">
