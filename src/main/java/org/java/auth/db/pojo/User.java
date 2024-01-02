@@ -153,7 +153,7 @@ public class User implements UserDetails {
 		return password;
 	}
 
-	private void setPassword(String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

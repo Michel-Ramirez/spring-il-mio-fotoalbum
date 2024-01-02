@@ -2,6 +2,7 @@
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
 import AppShowPicture from './components/AppShowPicture.vue';
+import AppFooter from './components/AppFooter.vue';
 import { ref } from 'vue'
 
 const picture = ref(null)
@@ -19,6 +20,7 @@ const closePic = (closePic) => {
   <AppHeader />
   <AppMain @openPicture="openPicture" v-if="!picture" />
   <AppShowPicture :picture="picture" @closePic="closePic" v-else />
+  <AppFooter />
 </template>
 
 <style scoped></style>

@@ -35,6 +35,10 @@ const picture = props.picture
 
         <h1 class="my-5">{{ picture.title }}</h1>
 
+        <div>
+            <div v-for="cat in picture.categories" class="badge text-bg-primary me-3 mb-5">{{ cat.name }}</div>
+        </div>
+
         <figure class="d-flex justify-content-center ">
             <img :src="picture.img" :alt="picture.title" class="img-fluid">
         </figure>

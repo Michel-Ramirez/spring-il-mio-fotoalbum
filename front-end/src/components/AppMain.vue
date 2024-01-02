@@ -38,9 +38,10 @@ onMounted(fetchPictures)
                         <h5 class="card-title">{{ pic.title }}</h5>
                         <p class="card-text">{{ pic.description }}</p>
                     </div>
-                    <p class="text-end">
-                        <span class="fw-bolder me-2">Photographer :</span><i> {{ pic.user.name }} {{ pic.user.surname }}</i>
-                    </p>
+                    <div class="text-end">
+                        <p class="fw-bolder me-2">Photographer : <i> {{ pic.user.name }} {{ pic.user.surname }}</i></p>
+                        <div v-for="cat in pic.categories" class="badge text-bg-primary me-2">{{ cat.name }}</div>
+                    </div>
                 </div>
             </div>
         </div>
