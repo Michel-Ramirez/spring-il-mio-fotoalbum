@@ -6,7 +6,10 @@ const props = defineProps({
     picture: Object
 })
 
-const alert = ref(false);
+const alertMsgSended = ref(false);
+const errorName = ref(false)
+const errorEmail = ref(false)
+const errorMessage = ref(false)
 
 const message = ref({
     name: "",
@@ -17,11 +20,22 @@ const message = ref({
 
 const sendMessage = async () => {
 
-    const data = await axios.post(`http://localhost:8080/api/v1.0/messages?userId=${picture.user.id}`, message.value);
+    if (message.value.name === "") {
+        errorName.value = true
+    } else if (message.value.email === "") {
+        errorEmail.value = true
+        
+    } else if(message.value.message === "") {
 
-    if (data.status === 200) {
-        alert.value = true
+        errorMessage.value = true
+    } else {
+        const data = await axios.post(`http://localhost:8080/api/v1.0/messages?userId=${picture.user.id}`, message.value);
+        if (data.status === 200) {
+            alertMsgSended.value = true
+        }    
     }
+
+
 }
 const picture = props.picture
 </script>
@@ -33,13 +47,21 @@ const picture = props.picture
             <div @click="$emit('closePic', picture == null)" class="btn btn-secondary">Return to Home</div>
         </div>
 
-        <h1 class="my-5">{{ picture.title }}</h1>
+        <h1 class="mt-5">{{ picture.title }}</h1>
 
+<<<<<<< HEAD
         <div>
             <div v-for="cat in picture.categories" class="badge text-bg-primary me-3 mb-5">{{ cat.name }}</div>
         </div>
 
         <figure class="d-flex justify-content-center ">
+=======
+        <span v-if="picture.categories" v-for="cat in picture.categories" class="text-end">
+            <span class="badge text-bg-primary m-1">{{cat.name}}</span>
+        </span>
+
+        <figure class="d-flex justify-content-center mt-5">
+>>>>>>> 8565c3ece541b3542ffdc66fc2b7df663092be85
             <img :src="picture.img" :alt="picture.title" class="img-fluid">
         </figure>
         <p class="text-start">
@@ -55,7 +77,7 @@ const picture = props.picture
             <form @submit.prevent="sendMessage" method="POST">
                 <h4 class="mb-3">Contact</h4>
 
-                <div v-if="alert" class="alert alert-success">
+                <div v-if="alertMsgSended" class="alert alert-success">
                     <p class="m-0">Message sent successfully</p>
                 </div>
 
@@ -64,16 +86,25 @@ const picture = props.picture
                         <div class="col-6">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" v-model.trim="message.name">
+                            <div v-if="errorName" class="alert alert-danger">
+                                <p class="m-0">this field is required</p>
+                            </div>
                         </div>
                         <div class="col-6">
                             <label for="email" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="email" name="email" v-model.trim="message.email">
+                            <div v-if="errorEmail" class="alert alert-danger">
+                                <p class="m-0">this field is required</p>
+                            </div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" rows="3" name="text"
                             v-model.trim="message.message"></textarea>
+                            <div v-if="errorMessage" class="alert alert-danger">
+                                <p class="m-0">this field is required</p>
+                            </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5">

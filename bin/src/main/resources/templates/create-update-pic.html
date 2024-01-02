@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Create new pizza</title>
+    <style>
+        .wrapper {
+            border: 1px solid gray;
+            padding: 50px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header th:replace="fragments :: header(messagesSize)"></header>
+
+    <main class="container">
+
+        <h1 class="text-center my-5">Add new pic</h1>
+
+        <form class="d-flex justify-content-center" method="POST" th:object="${picture}">
+
+            <div class="wrapper">
+                <div class="d-flex">
+                    <div class="w-50">
+                        <div class="mb-3">
+                            <label for="name-pizza" class="form-label">Pic Title</label>
+                            <input type="text" class="form-control" id="name-pizza" th:field="*{title}">
+                            <div th:replace="fragments :: alertError('title')"></div>
+                        </div>
+                    </div>
+                    <div class="w-50 d-flex justify-content-center align-items-center">
+                        <div class="form-check form-switch">
+                            <label for="visible">Visible</label>
+                            <input class="form-check-input" id="visible" type="checkbox" role="switch"
+                                th:checked="${picture.visible}" th:field="*{visible}">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Url Pic</label>
+                    <input type="url" class="form-control" id="image" placeholder="http:://url" th:field="*{img}">
+                    <div th:replace="fragments :: alertError('img')"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" th:field="*{description}"></textarea>
+                    <div th:replace="fragments :: alertError('description')"></div>
+                </div>
+
+                <div class="mb-3 d-flex flex-wrap justify-content-between">
+                    <div th:each="cat : ${categories}" th:object="${cat}" class="form-check me-2">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="" th:id="${'cat -' + cat.id}"
+                                th:value="*{id}" th:field="${picture.categories}">
+                            <label class="form-check-label" th:for="${'cat -' + cat.id}">
+                                [[*{name}]]
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center my-5">
+                    <button type="submit" class="btn btn-success me-3">Save</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+
+</body>
+
+</html>

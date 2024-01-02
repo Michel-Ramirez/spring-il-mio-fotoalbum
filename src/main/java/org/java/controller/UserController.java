@@ -37,27 +37,19 @@ public class UserController {
 
 		User user = new User();
 
-		model.addAttribute("newUser", user);
+		model.addAttribute("user", user);
 		return "home";
 	}
 
 	@PostMapping("/")
-	public String saveNewUser(Model model, @Valid @ModelAttribute("newUser") User user, BindingResult bindingResult) {
+	public String saveNewUser(Model model, @Valid @ModelAttribute User user, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-
-			System.out.println("UTENTE DEL CAZZO" + user.getName() + " " + user.getSurname() + " " + user.getUsername()
-					+ " " + user.getEmail());
-			System.out.println("PASSWORD : " + user.getPassword());
-			System.out.println("ERRORE BINDIND DEL CRISTO" + bindingResult);
-
-			model.addAttribute("newUser", user);
+			model.addAttribute("user", user);
 			return "home";
 		}
 
 		try {
-
-			System.out.println("SALVA");
 			String psw = AuthConfig.passwordEncoder().encode(user.getPassword());
 
 			Role adminRole = roleService.findByName("ADMIN");
@@ -71,15 +63,11 @@ public class UserController {
 
 		} catch (Exception e) {
 
-			System.out.println("ERRORE NEL CATH DEL PORCO DIO");
-			System.out.println("UTENTE DEL CAZZO" + user.getName() + " " + user.getSurname() + " " + user.getUsername()
-					+ " " + user.getEmail() + " " + user.getPassword());
-
-			bindingResult.addError(new FieldError("newUser", "username", user.getUsername(), false, null, null,
+			bindingResult.addError(new FieldError("user", "username", user.getUsername(), false, null, null,
 					"This username already exists"));
-			bindingResult.addError(new FieldError("newUser", "email", user.getEmail(), false, null, null,
+			bindingResult.addError(new FieldError("user", "email", user.getEmail(), false, null, null,
 					"This email already exists"));
-			model.addAttribute("newUser", user);
+			model.addAttribute("user", user);
 			return "home";
 
 		}

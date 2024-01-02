@@ -34,7 +34,7 @@ public class PictureService {
 		pictureRepo.delete(picture);
 	}
 
-	public List<Picture> findByUserAndTitleOrCategory(User user, String query) {
+	public List<Picture> findByUserAndTitle(User user, String query) {
 		return pictureRepo.findByUserAndTitleContaining(user, query);
 	}
 
@@ -47,13 +47,4 @@ public class PictureService {
 		return pictureRepo.findByTitleContainingIgnoreCaseAndVisibleTrue(value);
 	}
 
-	public List<Picture> getAllPicturesWithCategories() {
-		List<Picture> pictures = pictureRepo.findAll();
-
-		for (Picture picture : pictures) {
-			picture.getCategories().size();
-		}
-
-		return pictures;
-	}
 }

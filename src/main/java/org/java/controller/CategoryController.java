@@ -37,6 +37,7 @@ public class CategoryController {
 	public String viewCategories(Model model, @RequestParam(required = false) String query,
 			@AuthenticationPrincipal UserDetails userDetails) {
 
+		if (userDetails == null) return "redirect:/login";
 		String username = userDetails.getUsername();
 		User user = userService.findByUsername(username);
 		userService.findByUsername(username);
@@ -59,8 +60,9 @@ public class CategoryController {
 
 	// ROTTA PER LA CREAZIONE DELLE CATEGORIE
 	@GetMapping("/category/create")
-	public String viewFormCat(Model model) {
+	public String viewFormCat(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
+		if (userDetails == null) return "redirect:/login";
 		Category cat = new Category();
 		model.addAttribute("category", cat);
 		return "create-update-category";
@@ -87,7 +89,9 @@ public class CategoryController {
 
 	// ROTTA CHE ELIMINA LA CATEGORIA
 	@PostMapping("/category/delete/{id}")
-	public String deleteCategory(@PathVariable int id, RedirectAttributes redirectAtr) {
+	public String deleteCategory(@PathVariable int id, RedirectAttributes redirectAtr, @AuthenticationPrincipal UserDetails userDetails) {
+		
+		if (userDetails == null) return "redirect:/login";
 		Category cat = catServ.findById(id);
 
 		// TROVO TUTTE LE PIC CHE HANNO QUESTA CATEGORIA

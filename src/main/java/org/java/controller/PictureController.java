@@ -42,11 +42,9 @@ public class PictureController {
 	public String getPicture(Model model, @RequestParam(required = false) String query,
 			@AuthenticationPrincipal UserDetails userDetails) {
 
-		// OTTENGO IL USERNAME DEL UTENTE LOGGATO
 		String username = userDetails.getUsername();
 
-		// OTTENGO L'UTENTE LOGGATO TRAMITE IL USERNAME
-		User user = userService.findByUsername(username);
+		User user = getUserIsLog(userDetails);
 
 		int unreadMessagesCount = unreadMsgCount(user);
 
@@ -57,7 +55,7 @@ public class PictureController {
 			model.addAttribute("pictures", pictures);
 		} else {
 			// SE C'E' UNA QUERY TROVO LA PIC PER NOME ALTRIMENTI TROVO LE PIC PER CATEGORIE
-			List<Picture> pictures = query != null ? pictureService.findByUserAndTitleOrCategory(user, query)
+			List<Picture> pictures = query != null ? pictureService.findByUserAndTitle(user, query)
 					: pictureService.getAllPicturesByUser(user);
 
 			model.addAttribute("pictures", pictures);
@@ -86,8 +84,10 @@ public class PictureController {
 	@GetMapping("/picture/{id}")
 	public String detailPicture(Model model, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
 
-		String username = userDetails.getUsername();
-		User user = userService.findByUsername(username);
+		if (userDetails == null)
+			return "redirect:/login";
+
+		User user = getUserIsLog(userDetails);
 
 		int unreadMessagesCount = unreadMsgCount(user);
 
@@ -105,6 +105,8 @@ public class PictureController {
 	@GetMapping("/picture/create")
 	public String viewPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
+		if (userDetails == null)
+			return "redirect:/login";
 		Picture picture = new Picture();
 
 		model.addAttribute("picture", picture);
@@ -128,9 +130,25 @@ public class PictureController {
 	}
 
 	@GetMapping("/picture/edit/{id}")
-	public String editPicture(Model model, @PathVariable int id) {
+	public String editPicture(Model model, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+
+		if (userDetails == null)
+			return "redirect:/login";
+		User user = getUserIsLog(userDetails);
 
 		Picture picture = pictureService.findById(id);
+
+		if (userHasRole(user, "SUPERADMIN")) {
+			model.addAttribute("categories", getCategories(model));
+			model.addAttribute("picture", picture);
+
+			return "create-update-pic";
+		}
+
+		if (picture.getUser().getId() != user.getId()) {
+
+			return "not-auth";
+		}
 
 		model.addAttribute("categories", getCategories(model));
 		model.addAttribute("picture", picture);
@@ -146,9 +164,17 @@ public class PictureController {
 	}
 
 	@PostMapping("/picture/delete/{id}")
-	public String delete(Model model, @PathVariable int id, RedirectAttributes redirectAttributes) {
+	public String delete(Model model, @PathVariable int id, RedirectAttributes redirectAttributes,
+			@AuthenticationPrincipal UserDetails userDetails) {
+
+		User user = getUserIsLog(userDetails);
 
 		Picture pic = pictureService.findById(id);
+
+		if (pic.getUser().getId() != user.getId()) {
+
+			return "not-auth";
+		}
 
 		pictureService.delete(pic);
 		redirectAttributes.addFlashAttribute("picDeleted", pic);
@@ -172,6 +198,13 @@ public class PictureController {
 		int id = picture.getId();
 
 		return "redirect:/picture/" + id;
+	}
+
+	public User getUserIsLog(UserDetails userDetails) {
+		String username = userDetails.getUsername();
+		User user = userService.findByUsername(username);
+
+		return user;
 	}
 
 	public List<Category> getCategories(Model model) {
